@@ -2,6 +2,8 @@
 
 # Codex Taskboard
 
+> This fork adds a compact project-progress summary and a stable owner-conversation entry to main board cards. See [Customization](CUSTOMIZATION.md).
+
 A local-first issue board that runs in a browser and can be embedded in Codex through the standalone CDP launcher or its injection script. The same HTTP API powers the React UI and the `taskctl` CLI used by the bundled Codex Skill.
 
 ![Codex Taskboard product screenshot](docs/assets/codex-taskboard.png)

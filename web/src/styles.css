@@ -8050,6 +8050,136 @@ kbd {
   animation: task-processing-sheen 1.9s linear infinite;
 }
 
+.task-progress-overview {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px 0 3px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.task-progress-heading,
+.task-progress-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.task-progress-heading,
+.task-current-step > span,
+.task-latest-activity > span {
+  color: var(--text-tertiary);
+  font-size: 10px;
+}
+
+.task-progress-heading strong {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.task-progress-heading strong span {
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+.task-child-progress progress {
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin-top: 7px;
+  overflow: hidden;
+  appearance: none;
+  border: 0;
+  border-radius: 4px;
+  color: var(--status-review);
+  background: var(--surface-active);
+}
+
+.task-child-progress progress::-webkit-progress-bar {
+  background: var(--surface-active);
+  border-radius: 4px;
+}
+
+.task-child-progress progress::-webkit-progress-value {
+  background: var(--status-review);
+  border-radius: 4px;
+}
+
+.task-child-progress progress::-moz-progress-bar {
+  background: var(--status-review);
+}
+
+.task-current-step p,
+.task-progress-blocker p,
+.task-latest-activity p {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.task-current-step p { color: var(--text-primary); }
+
+.task-progress-blocker {
+  padding: 8px 10px;
+  border-left: 2px solid var(--status-blocked);
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--status-blocked) 7%, transparent);
+  color: var(--status-blocked);
+}
+
+.task-latest-activity {
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.task-latest-activity p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.task-latest-activity:hover p { color: var(--text-primary); }
+.task-latest-activity .is-empty { color: var(--text-tertiary); }
+
+.task-progress-footer time {
+  color: var(--text-tertiary);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.task-owner-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 27px;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.task-owner-link:hover { border-color: var(--accent); }
+.task-owner-link:focus-visible,
+.task-latest-activity:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
 .card-progress-row {
   display: flex;
   align-items: center;

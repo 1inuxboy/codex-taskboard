@@ -24,6 +24,7 @@ import { DueDateIcon, PriorityIcon, ProjectIcon } from "./SemanticIcons";
 import { LabelPicker } from "./LabelPicker";
 import { TaskPropertyPicker } from "./TaskPropertyPicker";
 import { TaskConversationMenu } from "./TaskConversationMenu";
+import { TaskProgressOverview } from "./TaskProgressOverview";
 import completeIcon from "../assets/figma-taskboard/card-complete.svg";
 import processingAnimation from "../assets/figma-taskboard/loading-16.svg";
 
@@ -599,6 +600,10 @@ export function TaskCard({
             />
           )}
         </div>
+      )}
+
+      {variant === "main" && (
+        <TaskProgressOverview task={task} onOpenTask={onEdit} onOpenConversation={onOpenConversation} />
       )}
 
       {processingCard && (
