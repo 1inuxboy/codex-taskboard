@@ -4,6 +4,7 @@ import "./DashboardView.css";
 import dueDoneIcon from "../assets/figma-taskboard/dashboard-due-done.svg";
 import dueEditIcon from "../assets/figma-taskboard/dashboard-due-edit.svg";
 import processingAnimation from "../assets/figma-taskboard/loading-16.svg";
+import { pendingAttentionTasks } from "../pendingAttention";
 import { getProjectSummary } from "../api";
 import { taskPriorityLabel, taskStatusLabel, useTaskboardI18n } from "../i18n";
 import { labelPresentation } from "../labels";
@@ -474,6 +475,7 @@ export function DashboardView({
   const { language, locale, text } = useTaskboardI18n();
   const [projectSummary, setProjectSummary] = useState<ProjectSummary | null>(null);
   const [summaryLoadFailed, setSummaryLoadFailed] = useState(false);
+  const [attentionExpanded, setAttentionExpanded] = useState(false);
   useEffect(() => {
     if (isAllProjects) {
       setProjectSummary(null);
@@ -673,15 +675,8 @@ export function DashboardView({
     (task) => presentations[task.id]?.processing.running,
   ), [presentations, tasks]);
 
-  const attentionItems = useMemo(() => activeTasks
-    .filter((task) => task.status === "blocked" || presentations[task.id]?.unread)
-    .sort((left, right) => {
-      const leftUnread = presentations[left.id]?.unread ? 1 : 0;
-      const rightUnread = presentations[right.id]?.unread ? 1 : 0;
-      return rightUnread - leftUnread
-        || right.activityUpdatedAt.localeCompare(left.activityUpdatedAt);
-    })
-    .slice(0, 5), [activeTasks, presentations]);
+  const attentionItems = useMemo(() => pendingAttentionTasks(tasks), [tasks]);
+  const visibleAttentionItems = attentionExpanded ? attentionItems : attentionItems.slice(0, 5);
 
   const summaryBody = isAllProjects
     ? text(
@@ -779,23 +774,33 @@ export function DashboardView({
           </section>
 
           <section className="dashboard-panel dashboard-primary-panel dashboard-attention-panel">
-            <header><span>{text("需要关注（未读、阻塞）", "Needs attention (unread, blocked)")}</span></header>
-            <div className="dashboard-task-list">
-              {attentionItems.length ? attentionItems.map((task) => (
-                <button
-                  type="button"
-                  className="dashboard-attention-row"
-                  onClick={() => onOpenTask(task)}
-                  key={task.id}
-                >
-                  <span className="dashboard-attention-mark" aria-hidden="true">
-                    {presentations[task.id]?.unread && <i />}
-                  </span>
-                  <strong>{task.title}</strong>
-                  <small>ID: {task.externalKey ?? task.identifier}</small>
+            <header>
+              <span>{text("待你处理", "Needs your action")} <b>{attentionItems.length}</b></span>
+              {attentionItems.length > 5 && (
+                <button type="button" className="dashboard-attention-toggle"
+                  aria-expanded={attentionExpanded} aria-controls="dashboard-attention-list"
+                  onClick={() => setAttentionExpanded((expanded) => !expanded)}>
+                  {attentionExpanded ? text("收起", "Show less") : text(`查看全部（${attentionItems.length}）`, `View all (${attentionItems.length})`)}
                 </button>
+              )}
+            </header>
+            <div className="dashboard-task-list" id="dashboard-attention-list">
+              {visibleAttentionItems.length ? visibleAttentionItems.map((task) => (
+                <article className="dashboard-attention-row" key={task.id}>
+                  <button type="button" className="dashboard-attention-open" onClick={() => onOpenTask(task)}>
+                    <span className="dashboard-attention-mark" aria-hidden="true">
+                      {presentations[task.id]?.unread && <i />}
+                    </span>
+                    <strong>{task.title}</strong>
+                    <small>ID: {task.externalKey ?? task.identifier}</small>
+                  </button>
+                  <div className="dashboard-attention-footer">
+                    <span>{task.status === "in_review" ? text("待验收", "Awaiting acceptance") : text("待解除阻塞", "Needs unblocking")}</span>
+                    <TaskConversationMenu conversations={presentations[task.id]?.conversations ?? []} onOpenConversation={onOpenConversation} />
+                  </div>
+                </article>
               )) : (
-                <div className="dashboard-empty">{text("当前没有需要关注的议题", "No issues need attention")}</div>
+                <div className="dashboard-empty">{text("当前没有待你处理的任务", "No tasks need your action")}</div>
               )}
             </div>
           </section>
