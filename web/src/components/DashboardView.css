@@ -1194,3 +1194,7 @@
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+
+.dashboard-view .dashboard-attention-panel .dashboard-task-list {
+  grid-auto-rows: max-content;
+}
