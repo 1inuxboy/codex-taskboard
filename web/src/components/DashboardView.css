@@ -660,7 +660,7 @@
 
 .dashboard-view .dashboard-attention-row {
   grid-template-columns: minmax(0, 1fr);
-  min-height: 42px;
+  min-height: max-content;
 }
 
 .dashboard-view .dashboard-attention-mark {
