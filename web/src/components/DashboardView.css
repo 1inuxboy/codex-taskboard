@@ -659,8 +659,8 @@
 }
 
 .dashboard-view .dashboard-attention-row {
-  grid-template-columns: 16px minmax(0, 1fr) auto;
-  min-height: 42px;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: max-content;
 }
 
 .dashboard-view .dashboard-attention-mark {
@@ -1155,4 +1155,46 @@
   .dashboard-view .dashboard-progress-legend > span {
     min-width: 0;
   }
+}
+
+.dashboard-view .dashboard-attention-open {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dashboard-view .dashboard-attention-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text-tertiary);
+  font-size: 11px;
+}
+
+.dashboard-view .dashboard-attention-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dashboard-attention-open:focus-visible,
+.dashboard-attention-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.dashboard-view .dashboard-attention-panel .dashboard-task-list {
+  grid-auto-rows: max-content;
 }
