@@ -61,6 +61,8 @@ ln -s /absolute/path/to/codex-taskboard/skills/manage-taskboard \
 
 The desktop app keeps this same directory synchronized with its bundled Skill. The Skill teaches Codex to inspect an issue, move it to `in_progress`, use optimistic versions, verify the work, and then move it to `in_review`; it moves the issue to `done` only after the user explicitly confirms acceptance or asks to mark it complete.
 
+For lightweight, human-facing progress tracking, see [work-progress](docs/work-progress.md). It maintains a project progress record and currently uses Codex `visualize` for on-demand presentation, without requiring the Taskboard server.
+
 ## Embed in Codex
 
 ### Manual: use a dedicated CDP port
