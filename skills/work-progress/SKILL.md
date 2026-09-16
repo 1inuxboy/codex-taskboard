@@ -1,6 +1,6 @@
 ---
 name: work-progress
-description: Maintain human-facing work progress and visualize outcomes, blockers, dependencies, and next steps. Use when the user asks to track ongoing work, see overall progress, or resume an overview of work. Currently uses Codex visualize; falls back to Markdown when unavailable. Not an agent-memory or project-instruction manager.
+description: Maintain human-facing work progress and visualize outcomes, blockers, dependencies, and next steps. Use when the user asks to track ongoing work, see overall progress, or resume an overview of work. Deliver a Codex visualize progress panel on first activation and when the user requests an overview; fall back to Markdown only when unavailable or explicitly requested. Not an agent-memory or project-instruction manager.
 ---
 
 # 工作进展
@@ -38,8 +38,9 @@ description: Maintain human-facing work progress and visualize outcomes, blocker
 
 ## 展示给用户
 
-- 当前可视化依赖 **Codex 的 `visualize` Skill**。用户要求可视化、需要重新理解整体进展，或关键变化影响全局理解时，先读取当前环境提供的 `visualize` Skill，再按其合同生成会话内展示。不要每个工作回合都重画。
-- 根据实际内容选择进展路线、依赖图、成果对比等，突出当前重点、阻塞影响及用户下一步。简单列表足够时直接用 Markdown；静态关系可用 Mermaid，遵循 `visualize` 的选择规则。
+- 当前可视化依赖 **Codex 的 `visualize` Skill**。首次启用本 Skill，以及用户要求查看整体进展时，默认交付会话内可视化进展面板，不能只写文档就结束。先读取当前环境提供的 `visualize` Skill，按其合同生成并在最终回复中嵌入展示；只创建 HTML 文件或返回文件路径不算完成展示。用户明确只要文字、表格或只维护记录时遵循用户要求。
+- 面板按工作内容组织进展与成果，允许展开查看已有的依据、阻塞原因和下一步，避免只复制 Markdown 表格。使用 visualize 提供的 HTML/CSS/JavaScript 展示能力，不新增 React 或组件库依赖。局部静态依赖关系可用 Mermaid，但不以单独一张关系图代替用户要求的进展面板。
+- 后续只有影响整体理解的重要变化才更新面板；普通工具调用或仅调整文档措辞不重画。进展文档是数据来源，面板是给用户的主要交付物。
 - 展示从进展记录和已核实成果派生，标注截至时间，不把视图当成独立状态源。界面中的展示操作不直接改变工作状态；确认或执行仍走用户原有工作流程。
 - `visualize` 不可用时明确说明，提供 Markdown 进展；不自动安装插件或搭建替代网站。证据使用可访问的链接或准确路径，不编造会话链接。
 - 记录不包含渲染器专属字段。未来可扩展其他可视化工具，本期不建设适配层、后台、Hook 或调度系统。
