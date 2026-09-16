@@ -1,0 +1,50 @@
+tasks:
+- id: work-progress-skill
+  title: 交付轻量工作进展 Skill
+  description: 给用户展示工作进展，当前使用 Codex visualize，保持记录与展示分离。
+  status: done
+  updated_at: '2026-09-16T14:32:36+08:00'
+  evidence:
+  - https://github.com/1inuxboy/codex-taskboard/pull/2
+  - 本机与 laptop 副本此前已核对一致；本次为迁入时间，不代表历史交付时间。
+- id: visual-hierarchy
+  title: 主子任务可视化展示
+  description: 主任务与子任务分别显示进度，活动信息直接可见。
+  status: done
+  updated_at: '2026-09-16T14:32:36+08:00'
+  evidence:
+  - 用户本轮确认：可视化效果不错。迁入时间不代表原始设计时间。
+- id: persistent-progress
+  title: 用项目文件保存任务进展
+  description: 以 Git 管理任务事实，替代重复待办文件，显示更新时间并折叠完成项。
+  status: in_review
+  updated_at: '2026-09-16T14:36:09+08:00'
+  next:
+  - 确认完成项折叠与更新时间展示；在新会话进行真实试用。
+- id: task-data
+  parent: persistent-progress
+  title: 数据结构与维护规则
+  description: 创建项目范围和任务文件，保存父子关系、依赖、证据与更新时间。
+  status: done
+  updated_at: '2026-09-16T14:34:29+08:00'
+  evidence:
+  - YAML 解析、必填字段、时区、引用及主子/依赖无环检查通过。
+- id: completed-display
+  parent: persistent-progress
+  title: 完成项折叠与时间展示
+  description: 活动任务直接显示，已完成项按层折叠且可重新展开。
+  status: in_review
+  depends_on:
+  - task-data
+  updated_at: '2026-09-16T14:36:09+08:00'
+  evidence:
+  - 基于 tasks.yaml 生成面板；主任务及子任务的完成项分别折叠，展示任务更新时间。
+- id: real-usage
+  title: 跨会话真实工作试用
+  description: 验证重要变化能否被主动记录，再次查看时是否准确。
+  status: todo
+  depends_on:
+  - persistent-progress
+  updated_at: '2026-09-16T14:32:36+08:00'
+  next:
+  - 在自然开启的新会话中跟踪真实工作
