@@ -195,3 +195,7 @@ A requested batch is complete only when:
 - any requested release is published and verified.
 
 Record-only and explicitly waiting issues are excluded from active implementation counts, but they must be reported accurately in the batch summary.
+
+## Human-facing work progress
+
+For work tracked with `work-progress`, use `.agent-project/tasks.yaml` as the single progress source and `.agent-project/project.md` for its scope. Do not create or continue duplicate `to-do.md`, `TO-DO.md`, or `progress.md` lists for that work. This project-specific convention replaces the generic TO-DO.md requirement for this scope. Keep normal design documents and Taskboard issue workflows intact; these files do not mirror the application database.

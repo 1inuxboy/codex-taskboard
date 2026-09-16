@@ -2,7 +2,7 @@
 
 产品原则：轻量起步，一点点增加，定期删减。目标是让用户快速看懂 AI 工作的进度、成果、阻塞和下一步，不建设 Agent 记忆系统，也不要求用户维护任务表。
 
-源文件：[work-progress Skill](../skills/work-progress/SKILL.md)。当前由 Agent 维护项目已有进展文件（没有时用 `progress.md`），首次调用默认交付 Codex `visualize` 会话内进展面板，后续重要变化时更新。设计依据留在原有 docs，Agent 指令留在 AGENTS.md / CLAUDE.md；进展记录仅链接它们。
+源文件：[work-progress Skill](../skills/work-progress/SKILL.md)。当前由 Agent 维护 `.agent-project/project.md`（目标与范围）和 `.agent-project/tasks.yaml`（唯一任务事实源），首次调用默认交付 Codex `visualize` 会话内进展面板，后续重要变化时更新。设计依据留在原有 docs，Agent 指令留在 AGENTS.md / CLAUDE.md；进展记录仅链接它们。
 
 ## 使用
 
@@ -11,6 +11,16 @@
 > $work-progress 跟踪当前工作的进展；有重要变化时维护记录，现在先用 visualize 展示进展面板。
 
 当前可视化依赖 Codex `visualize`，不可用时说明并展示 Markdown。记录与渲染方式分开，未来按实际需求接入其他工具，本期不做适配层、后台或自动调度。
+
+## 持久化与展示
+
+任务保存稳定 ID、描述、状态、最新更新时间，以及按需填写的父项、依赖、证据、阻塞和下一步。主任务与子任务各有进度，只有有依据时才填百分比。具体格式由 Skill 定义。
+
+不再维护平行的 `to-do.md` / `TO-DO.md` / `progress.md` 清单。迁移时核对内容，旧清单改为新数据入口；本仓库当前没有这些清单需要迁移。任务数据随正常 Git 提交保存历史，不建立 history 目录或自动提交器。
+
+面板直接展示活动工作，每项显示更新时间；已完成任务在每层默认折叠为“已完成（N）”，可展开，不删除数据。刷新视图不改任务时间，待确认不视为已完成。
+
+本项目的实验数据见 [项目范围](../.agent-project/project.md) 和 [任务进展](../.agent-project/tasks.yaml)。
 
 ## 维护与安装
 
